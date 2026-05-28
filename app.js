@@ -64,15 +64,30 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
 
-        // Update raw JSON link
-        btnRawJson.href = `datasets/${datasetName}.json`;
+        // Update raw JSON / CSV link
+        if (datasetName === 'tourism') {
+            btnRawJson.href = `datasets/indonesia_tourism.csv`;
+            btnRawJson.querySelector('span').innerText = "Lihat Raw CSV";
+            btnRawJson.querySelector('i').className = "fa-solid fa-file-csv";
+        } else {
+            btnRawJson.href = `datasets/${datasetName}.json`;
+            btnRawJson.querySelector('span').innerText = "Lihat Raw JSON";
+            btnRawJson.querySelector('i').className = "fa-solid fa-code";
+        }
 
         try {
             let data = cachedData[datasetName];
             if (!data) {
-                const response = await fetch(`datasets/${datasetName}.json`);
-                if (!response.ok) throw new Error('Network response was not ok');
-                data = await response.json();
+                if (datasetName === 'tourism') {
+                    const response = await fetch(`datasets/indonesia_tourism.csv`);
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    const text = await response.text();
+                    data = parseCSV(text);
+                } else {
+                    const response = await fetch(`datasets/${datasetName}.json`);
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    data = await response.json();
+                }
                 cachedData[datasetName] = data; // Cache
             }
 
@@ -108,6 +123,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 datasetTitle.innerText = "Weather & Air Quality Dashboard";
                 datasetSubtitle.innerText = "Pemantauan cuaca waktu-nyata, prakiraan per-jam & mingguan, serta kualitas udara (AQI)";
                 renderWeather(data);
+                break;
+            case 'tourism':
+                datasetTitle.innerText = "Indonesian Tourism Places Dashboard";
+                datasetSubtitle.innerText = "Eksplorasi 105 destinasi wisata pilihan dari 26 provinsi di Indonesia lengkap dengan ulasan, peta, dan harga tiket masuk";
+                renderTourism(data);
                 break;
         }
     }
@@ -852,5 +872,230 @@ document.addEventListener('DOMContentLoaded', () => {
                 ${nodesHTML}
             </svg>
         `;
+    }
+
+    // Helper to parse the Indonesian Tourism CSV
+    function parseCSV(text) {
+        const lines = text.split('\n');
+        const headers = lines[0].split(',');
+        const result = [];
+        
+        for (let i = 1; i < lines.length; i++) {
+            const line = lines[i].trim();
+            if (!line) continue;
+            
+            const parts = line.split(',');
+            if (parts.length < 9) continue;
+            
+            const obj = {
+                Place_Id: parts[0].trim(),
+                Place_Name: parts[1].trim(),
+                Category: parts[2].trim(),
+                City: parts[3].trim(),
+                Province: parts[4].trim(),
+                Price: parseFloat(parts[5].trim()) || 0,
+                Rating: parseFloat(parts[6].trim()) || 0,
+                Lat: parseFloat(parts[7].trim()) || 0,
+                Long: parseFloat(parts[8].trim()) || 0,
+                Description: parts.slice(9).join(',').trim()
+            };
+            
+            // Clean quotes if description has any
+            if (obj.Description.startsWith('"') && obj.Description.endsWith('"')) {
+                obj.Description = obj.Description.substring(1, obj.Description.length - 1);
+            }
+            result.push(obj);
+        }
+        return result;
+    }
+
+    /* -------------------------------------------------------------
+     * 4. INDONESIAN TOURISM DASHBOARD RENDERER
+     * ------------------------------------------------------------- */
+    function renderTourism(allDestinations) {
+        // Formatter Helper for IDR currency
+        const formatRupiah = (num) => {
+            if (num === 0) return "<span class='status-badge success'>Gratis</span>";
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(num);
+        };
+
+        // Calculations for Stats Card
+        const totalDestinations = allDestinations.length;
+        const avgRating = (allDestinations.reduce((acc, curr) => acc + curr.Rating, 0) / totalDestinations).toFixed(2);
+        const maxPrice = Math.max(...allDestinations.map(d => d.Price));
+        const freePlaces = allDestinations.filter(d => d.Price === 0).length;
+
+        // Categories list
+        const categories = [...new Set(allDestinations.map(d => d.Category))];
+
+        let html = `
+            <!-- Stat 1: Total Destinasi -->
+            <div class="card stat-card">
+                <div class="stat-info">
+                    <span class="stat-label">Total Destinasi</span>
+                    <span class="stat-val">${totalDestinations}</span>
+                </div>
+                <div class="stat-icon primary">
+                    <i class="fa-solid fa-compass"></i>
+                </div>
+            </div>
+
+            <!-- Stat 2: Avg Rating -->
+            <div class="card stat-card">
+                <div class="stat-info">
+                    <span class="stat-label">Rata-rata Rating</span>
+                    <span class="stat-val">${avgRating} <i class="fa-solid fa-star" style="font-size: 1.15rem; color: #f59e0b;"></i></span>
+                </div>
+                <div class="stat-icon warning">
+                    <i class="fa-solid fa-star"></i>
+                </div>
+            </div>
+
+            <!-- Stat 3: Tiket Termahal -->
+            <div class="card stat-card">
+                <div class="stat-info">
+                    <span class="stat-label">Tiket Termahal</span>
+                    <span class="stat-val" style="font-size: 1.55rem;">Rp ${(maxPrice/1000).toFixed(0)}rb</span>
+                </div>
+                <div class="stat-icon danger">
+                    <i class="fa-solid fa-tag"></i>
+                </div>
+            </div>
+
+            <!-- Stat 4: Wisata Gratis -->
+            <div class="card stat-card">
+                <div class="stat-info">
+                    <span class="stat-label">Tiket Gratis</span>
+                    <span class="stat-val">${freePlaces} Lokasi</span>
+                </div>
+                <div class="stat-icon success">
+                    <i class="fa-solid fa-face-smile"></i>
+                </div>
+            </div>
+
+            <!-- Search, Category Filter -->
+            <div class="card col-4" style="padding: 1.5rem;">
+                <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center; justify-content: space-between;">
+                    <div style="display: flex; gap: 1rem; flex-grow: 1; flex-wrap: wrap;">
+                        <!-- Search Box -->
+                        <div style="position: relative; flex-grow: 1; min-width: 250px;">
+                            <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-secondary);"></i>
+                            <input type="text" id="search-tourism" placeholder="Cari nama tempat, kota, atau provinsi..." 
+                                style="width: 100%; padding: 0.85rem 1.25rem 0.85rem 2.8rem; border-radius: 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); color: white; font-size: 0.95rem; outline: none; transition: border-color 0.3s;"
+                                onfocus="this.style.borderColor='var(--secondary)'" onblur="this.style.borderColor='var(--border-glass)'" />
+                        </div>
+                        <!-- Dropdown Filter -->
+                        <div style="min-width: 180px;">
+                            <select id="filter-category" 
+                                style="width: 100%; padding: 0.85rem 1.25rem; border-radius: 12px; background: var(--bg-card); border: 1px solid var(--border-glass); color: white; font-size: 0.95rem; outline: none; cursor: pointer;">
+                                <option value="all">Semua Kategori</option>
+                                ${categories.map(c => `<option value="${c}">${c}</option>`).join('')}
+                            </select>
+                        </div>
+                    </div>
+                    <div style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 500;" id="filtered-count-label">
+                        Menampilkan ${totalDestinations} destinasi wisata
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Destinations List Table -->
+            <div class="card col-4">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fa-solid fa-list-ul"></i> Eksplorasi Destinasi Wisata Nusantara</h3>
+                    <span class="badge">CSV DATA</span>
+                </div>
+                <div class="table-wrapper" style="max-height: 480px; overflow-y: auto;">
+                    <table class="custom-table" id="tourism-table">
+                        <thead>
+                            <tr>
+                                <th>Destinasi</th>
+                                <th>Kategori</th>
+                                <th>Lokasi</th>
+                                <th>Harga Tiket</th>
+                                <th style="text-align: center;">Rating</th>
+                                <th style="width: 35%;">Deskripsi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tourism-table-body">
+                            ${generateTableRowsHTML(allDestinations, formatRupiah)}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        `;
+
+        dashboardView.innerHTML = html;
+
+        // Interactive filtering logic
+        const searchInput = document.getElementById('search-tourism');
+        const categoryFilter = document.getElementById('filter-category');
+        const tableBody = document.getElementById('tourism-table-body');
+        const filteredCountLabel = document.getElementById('filtered-count-label');
+
+        function performFiltering() {
+            const query = searchInput.value.toLowerCase().trim();
+            const selectedCat = categoryFilter.value;
+
+            const filtered = allDestinations.filter(item => {
+                const matchesSearch = item.Place_Name.toLowerCase().includes(query) || 
+                                      item.City.toLowerCase().includes(query) || 
+                                      item.Province.toLowerCase().includes(query) ||
+                                      item.Description.toLowerCase().includes(query);
+                
+                const matchesCategory = selectedCat === 'all' || item.Category === selectedCat;
+                
+                return matchesSearch && matchesCategory;
+            });
+
+            tableBody.innerHTML = generateTableRowsHTML(filtered, formatRupiah);
+            filteredCountLabel.innerText = `Menampilkan ${filtered.length} destinasi wisata`;
+        }
+
+        searchInput.addEventListener('input', performFiltering);
+        categoryFilter.addEventListener('change', performFiltering);
+    }
+
+    // Generate table rows HTML helper
+    function generateTableRowsHTML(destinations, formatRupiah) {
+        if (destinations.length === 0) {
+            return `
+                <tr>
+                    <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 3rem 0;">
+                        <i class="fa-solid fa-ban" style="font-size: 2rem; margin-bottom: 0.5rem; display: block;"></i>
+                        Tidak ada destinasi wisata yang cocok dengan pencarian Anda.
+                    </td>
+                </tr>
+            `;
+        }
+        return destinations.map(item => `
+            <tr>
+                <td>
+                    <div style="font-weight: 600; font-size: 0.95rem; color: white;">${item.Place_Name}</div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.15rem;">ID: ${item.Place_Id} | GPS: ${item.Lat}, ${item.Long}</div>
+                </td>
+                <td>
+                    <span class="status-badge" style="background: rgba(99, 102, 241, 0.1); color: var(--secondary); font-weight: 600;">
+                        ${item.Category}
+                    </span>
+                </td>
+                <td>
+                    <div style="font-weight: 500;">${item.City}</div>
+                    <div style="font-size: 0.75rem; color: var(--text-secondary);">${item.Province}</div>
+                </td>
+                <td>
+                    ${formatRupiah(item.Price)}
+                </td>
+                <td style="text-align: center; font-weight: 700; color: #f59e0b;">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 0.25rem;">
+                        <span>${item.Rating.toFixed(1)}</span>
+                        <i class="fa-solid fa-star" style="font-size: 0.8rem;"></i>
+                    </div>
+                </td>
+                <td style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.4; max-width: 300px; white-space: normal;">
+                    ${item.Description}
+                </td>
+            </tr>
+        `).join('');
     }
 });
