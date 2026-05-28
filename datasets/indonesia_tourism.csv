@@ -29,3 +29,78 @@ Place_Id,Place_Name,Category,City,Province,Price,Rating,Lat,Long,Description
 28,Farmhouse Susu Lembang,Rekreasi,Bandung,Jawa Barat,30000,4.4,-6.8272,107.6046,Taman hiburan keluarga bergaya peternakan Eropa dengan bangunan Hobbiton dan susu segar gratis.
 29,Kraton Yogyakarta,Sejarah,Yogyakarta,DI Yogyakarta,15000,4.6,-7.8053,110.3642,Istana kesultanan resmi Yogyakarta yang menjadi pusat kebudayaan dan pelestarian adat Jawa.
 30,Kota Tua Jakarta,Sejarah,Jakarta Barat,DKI Jakarta,0,4.5,-6.1376,106.8124,Kawasan bersejarah peninggalan kolonial Belanda yang dipenuhi arsitektur klasik dan museum sejarah.
+31,Garuda Wisnu Kencana (GWK),Budaya,Badung,Bali,125000,4.6,-8.8104,115.1676,Taman budaya dengan patung tembaga raksasa Dewa Wisnu menunggangi Garuda setinggi 121 meter.
+32,Nusa Penida,Alam,Klungkung,Bali,75000,4.8,-8.7278,115.5444,Pulau eksotis dengan tebing ikonik berbentuk T-Rex di Pantai Kelingking dan kolam alami Angel's Billabong.
+33,Tegallalang Rice Terrace,Alam,Gianyar,Bali,15000,4.6,-8.4326,115.2787,Hamparan sawah berundak tradisional Bali (Subak) yang sangat indah dan asri di Ubud.
+34,Pura Ulun Danu Beratan,Budaya,Tabanan,Bali,75000,4.7,-8.2752,115.1661,Pura air suci candi Hindu ikonik di tepi Danau Beratan yang tampak seolah mengapung di atas air.
+35,Monkey Forest Ubud,Alam,Gianyar,Bali,80000,4.5,-8.5194,115.2606,Hutan suci lindung yang dihuni oleh ratusan kera abu-abu ekor panjang yang ramah di pusat Ubud.
+36,Masjid Istiqlal,Budaya,Jakarta Pusat,DKI Jakarta,0,4.8,-6.1702,106.8314,Masjid terbesar di Asia Tenggara dengan arsitektur modern megah yang melambangkan kemerdekaan Indonesia.
+37,Gereja Katedral Jakarta,Sejarah,Jakarta Pusat,DKI Jakarta,0,4.8,-6.1697,106.8331,Gereja Katolik bersejarah bergaya neo-gotik klasik yang terletak tepat berhadapan dengan Masjid Istiqlal.
+38,Museum Macan,Rekreasi,Jakarta Barat,DKI Jakarta,100000,4.6,-6.1912,106.7681,Museum seni modern dan kontemporer pertama di Indonesia yang menampilkan karya seni bertaraf internasional.
+39,Taman Margasatwa Ragunan,Rekreasi,Jakarta Selatan,DKI Jakarta,4000,4.4,-6.3124,106.8202,Kebun binatang tropis seluas 140 hektar yang mengoleksi ribuan spesies satwa liar Nusantara.
+40,Floating Market Lembang,Rekreasi,Bandung,Jawa Barat,35000,4.5,-6.8183,107.6186,Taman rekreasi keluarga dengan pasar kuliner terapung di atas danau buatan yang sejuk.
+41,Dusun Bambu,Rekreasi,Bandung,Jawa Barat,40000,4.6,-6.7891,107.5786,Ekowisata bertema bambu Sunda dengan restoran tepi danau, penginapan glamping, dan taman bermain asri.
+42,Orchid Forest Cikole,Alam,Bandung,Jawa Barat,40000,4.7,-6.7802,107.6372,Hutan wisata pohon pinus dengan koleksi anggrek terbesar di Indonesia serta jembatan gantung bercahaya.
+43,Tangkuban Perahu,Alam,Subang,Jawa Barat,30000,4.4,-6.7596,107.6097,Gunung api aktif legendaris yang memiliki kawah belerang raksasa berbentuk mirip perahu terbalik.
+44,Museum Geologi Bandung,Sejarah,Bandung,Jawa Barat,3000,4.6,-6.9007,107.6214,Museum edukasi sejarah bumi dengan koleksi fosil dinosaurus T-Rex dan fosil manusia purba.
+45,Jalan Braga,Belanja,Bandung,Jawa Barat,0,4.6,-6.9178,107.6096,Jalan bersejarah ikonik pusat kota Bandung yang bernuansa Eropa tempo dulu dipenuhi kafe dan seni jalanan.
+46,Taman Pintar Yogyakarta,Rekreasi,Yogyakarta,DI Yogyakarta,20000,4.5,-7.8007,110.3678,Taman bermain edukasi sains interaktif yang sangat disukai oleh anak-anak dan pelajar.
+47,Tebing Breksi,Rekreasi,Sleman,DI Yogyakarta,10000,4.5,-7.7814,110.4839,Tebing batu kapur bekas tambang yang dipahat indah dengan ukiran tokoh pewayangan naga jawa.
+48,Goa Jomblang,Alam,Gunungkidul,DI Yogyakarta,500000,4.8,-8.0286,110.6384,Goa vertikal purba dengan hutan di dalamnya yang terkenal dengan fenomena berkas cahaya surga di siang hari.
+49,Goa Pindul,Rekreasi,Gunungkidul,DI Yogyakarta,45000,4.4,-7.9338,110.6489,Petualangan menyusuri sungai bawah tanah di dalam goa menggunakan ban pelampung (cave tubing).
+50,Hutan Pinus Mangunan,Alam,Bantul,DI Yogyakarta,5000,4.5,-7.9392,110.4316,Hutan pinus asri yang sejuk dengan panggung pertunjukan kayu terbuka yang instagramable.
+51,Museum Angkut,Rekreasi,Batu,Jawa Timur,110000,4.8,-7.8792,112.5186,Museum transportasi modern terbesar di Asia dengan koleksi ratusan mobil antik dari berbagai era dan zona benua.
+52,Jawa Timur Park 1,Rekreasi,Batu,Jawa Timur,100000,4.6,-7.8837,112.5252,Taman bermain edukasi sains dan budaya yang dikombinasikan dengan puluhan wahana permainan seru.
+53,Jawa Timur Park 2 (Batu Secret Zoo),Rekreasi,Batu,Jawa Timur,130000,4.8,-7.8891,112.5292,Kebun binatang interaktif modern berskala internasional dengan desain kandang hewan yang sangat terawat.
+54,Jawa Timur Park 3,Rekreasi,Batu,Jawa Timur,120000,4.7,-7.8962,112.5401,Taman rekreasi keluarga bertema dinosaurus interaktif (Dino Park) dan galeri replika lilin tokoh dunia.
+55,Taman Rekreasi Selecta,Rekreasi,Batu,Jawa Timur,40000,4.5,-7.8286,112.5276,Taman bunga bersejarah peninggalan Belanda yang luas, sejuk, dan dilengkapi kolam renang air pegunungan.
+56,Taman Nasional Bromo Tengger Semeru,Alam,Pasuruan,Jawa Timur,29000,4.9,-8.0214,112.9192,Kawasan konservasi pegunungan dengan hamparan lautan pasir berbisik yang mengelilingi kaldera Gunung Bromo.
+57,Kawah Ijen,Alam,Banyuwangi,Jawa Timur,15000,4.8,-8.0583,114.2422,Kawah asam terbesar di dunia yang terkenal dengan fenomena langka api biru (blue fire) di malam hari.
+58,Pantai Senggigi,Bahari,Lombok Barat,Nusa Tenggara Barat,10000,4.4,-8.4844,116.0422,Kawasan wisata pantai utama di Lombok dengan garis pantai melengkung indah dan terumbu karang menawan.
+59,Taman Wisata Alam Gunung Tunak,Alam,Lombok Tengah,Nusa Tenggara Barat,15000,4.5,-8.9022,116.3530,Kawasan hutan lindung tepi pantai tebing kapur dengan pemandangan Samudra Hindia yang liar dan asri.
+60,Gili Meno,Bahari,Lombok Utara,Nusa Tenggara Barat,20000,4.7,-8.3496,116.0302,Pulau kecil sunyi yang tenang dengan pasir putih halus dan patung bawah laut karya seniman dunia.
+61,Gili Air,Bahari,Lombok Utara,Nusa Tenggara Barat,20000,4.6,-8.3592,116.0822,Pulau kecil tropis dengan perpaduan keheningan alam snorkeling dan fasilitas bar tepi pantai yang asyik.
+62,Pantai Tanjung Aan,Bahari,Lombok Tengah,Nusa Tenggara Barat,10000,4.7,-8.9102,116.3214,Pantai pasir bulat mirip butiran merica dengan bukit Merese indah di sampingnya untuk sunset.
+63,Desa Adat Sade,Budaya,Lombok Tengah,Nusa Tenggara Barat,20000,4.5,-8.8391,116.2930,Dusun adat suku Sasak asli Lombok dengan rumah anyaman bambu berlantai tanah liat campur kotoran kerbau.
+64,Pulau Padar,Alam,Manggarai Barat,Nusa Tenggara Timur,150000,4.9,-8.6472,119.5756,Pulau perbukitan ikonik di kawasan Komodo yang menyajikan pemandangan tiga teluk dengan warna pasir pantai berbeda.
+65,Pulau Rinca,Alam,Manggarai Barat,Nusa Tenggara Timur,150000,4.8,-8.7356,119.6822,Pulau sabana habitat asli komodo terbesar kedua setelah Pulau Komodo dengan trek trekking yang seru.
+66,Wae Rebo,Budaya,Manggarai,Nusa Tenggara Timur,325000,4.9,-8.7667,120.2831,Dusun terpencil di atas pegunungan terisolasi dengan 7 rumah adat berbentuk kerucut jerami raksasa (Mbaru Niang).
+67,Danau Kelimutu,Alam,Ende,Nusa Tenggara Timur,20000,4.8,-8.7628,121.8214,Tiga danau kawah vulkanik ajaib berdampingan yang airnya dapat berubah-ubah warna secara misterius.
+68,Istana Maimun,Sejarah,Medan,Sumatera Utara,10000,4.5,3.5753,98.6839,Istana Kesultanan Deli yang megah dengan dominasi warna kuning khas Melayu dikombinasikan arsitektur Spanyol.
+69,Lembah Harau,Alam,Lima Puluh Kota,Sumatera Barat,15000,4.8,-0.1014,100.6722,Lembah hijau yang diapit tebing batu pasir tegak lurus setinggi 100 meter dengan beberapa air terjun cantik.
+70,Jam Gadang,Sejarah,Bukittinggi,Sumatera Barat,0,4.7,-0.3050,100.3694,Menara jam setinggi 26 meter ikon kota Bukittinggi yang dibangun pada masa kolonial Belanda.
+71,Kepulauan Mentawai,Bahari,Mentawai,Sumatera Barat,250000,4.8,-2.0622,99.6102,Kepulauan surga selancar kelas dunia dengan ombak besar legendaris dan suku pedalaman yang eksotis.
+72,Taman Nasional Bunaken,Bahari,Manado,Sulawesi Utara,50000,4.8,1.6162,124.7578,Kawasan taman laut nasional dengan dinding terumbu karang vertikal bawah laut terindah di Indonesia.
+73,Kepulauan Wakatobi,Bahari,Wakatobi,Sulawesi Tenggara,150000,4.8,-5.3288,123.5930,Kepulauan tropis di jantung Segitiga Terumbu Karang Dunia dengan keindahan biota laut tak tertandingi.
+74,Tana Toraja (Kete Kesu),Budaya,Toraja Utara,Sulawesi Selatan,20000,4.7,-2.9930,119.9056,Desa adat kuno Toraja dengan barisan rumah adat Tongkonan beratap perahu dan tebing makam gua batu gantung.
+75,Pantai Losari,Rekreasi,Makassar,Sulawesi Selatan,0,4.4,-5.1444,119.4069,Ikon kota Makassar tempat berkumpul santai menikmati pisang epe sambil memandangi sunset selat Makassar.
+76,Taman Nasional Tanjung Puting,Alam,Kotawaringin Barat,Kalimantan Tengah,250000,4.9,-2.9288,111.9169,Konservasi orangutan liar terbesar di dunia yang dijelajahi menyusuri sungai menggunakan kapal kayu Klotok.
+77,Kepulauan Derawan,Bahari,Berau,Kalimantan Timur,200000,4.8,2.2530,118.2578,Surga bahari dengan air bening tempat penangkaran penyu hijau raksasa, ubur-ubur tanpa sengat, dan pari manta.
+78,Masjid Raya Baiturrahman,Budaya,Banda Aceh,Aceh,0,4.9,5.5536,95.3172,Masjid bersejarah ikon Aceh yang kokoh berdiri selamat dari sapuan bencana tsunami dahsyat tahun 2004.
+79,Museum Tsunami Aceh,Sejarah,Banda Aceh,Aceh,5000,4.7,5.5483,95.3153,Museum monumen rancangan Ridwan Kamil untuk memperingati bencana tsunami 2004 sekaligus tempat edukasi kebencanaan.
+80,Pulau Weh (Pantai Iboih),Bahari,Sabang,Aceh,30000,4.7,5.8753,95.2530,Titik Kilometer Nol barat Indonesia dengan pantai bening mirip kaca dan terumbu karang snorkeling terbaik.
+81,Pulau Bintan,Bahari,Bintan,Kepulauan Riau,100000,4.6,1.1572,104.4930,Destinasi resor mewah internasional dengan laguna air asin buatan terbesar di Asia Tenggara (Treasure Bay).
+82,Jembatan Barelang,Sejarah,Batam,Kepulauan Riau,0,4.5,0.9930,104.0489,Mahakarya arsitektur jembatan kabel besi rancangan BJ Habibie yang menghubungkan enam gugusan pulau di Batam.
+83,Pantai Tanjung Tinggi,Alam,Belitung,Bangka Belitung,10000,4.7,-2.5830,107.6722,Pantai pasir putih tenang bertabur batu granit raksasa artistik yang menjadi lokasi syuting film Laskar Pelangi.
+84,Pulau Lengkuas,Bahari,Belitung,Bangka Belitung,50000,4.8,-2.5286,107.6169,Pulau kecil berpasir putih dengan mercusuar kuno peninggalan Belanda tahun 1882 yang masih berfungsi aktif.
+85,Banda Neira,Sejarah,Maluku Tengah,Maluku,100000,4.9,-4.5272,129.9056,Pulau sejarah penghasil pala dunia yang diperebutkan bangsa Eropa dengan pemandangan gunung api bawah laut yang indah.
+86,Pantai Ora,Bahari,Maluku Tengah,Maluku,150000,4.8,-3.0286,129.1102,Pantai tersembunyi dengan resor terapung di atas air laut bening toska berlatar tebing karst hijau megah.
+87,Taman Nasional Lore Lindu,Alam,Poso,Sulawesi Tengah,20000,4.6,-1.3022,120.1530,Kawasan hutan pegunungan situs warisan dunia dengan koleksi patung batu megalitik misterius tersebar luas.
+88,Danau Kakaban,Bahari,Berau,Kalimantan Timur,50000,4.8,2.1530,118.5292,Danau unik di tengah pulau karang purba yang dihuni jutaan ubur-ubur tanpa sengat yang ramah diselami.
+89,Pantai Koka,Bahari,Sikka,Nusa Tenggara Timur,10000,4.7,-8.8022,122.0831,Pantai surga tersembunyi Flores berbentuk tapal kuda ganda dengan air toska sangat bening dan tebing karst.
+90,Pantai Ora,Bahari,Maluku Tengah,Maluku,150000,4.8,-3.0286,129.1102,Pantai indah yang sering dijuluki Maladewa-nya Indonesia karena keindahan resor di atas air toska.
+91,Taman Nasional Wasur,Alam,Merauke,Papua Selatan,20000,4.6,-8.4862,140.6102,Lahan basah terluas di Papua yang merupakan rumah bagi kanguru pohon, burung cenderawasih, dan sarang semut raksasa (musamus).
+92,Lembah Baliem,Budaya,Jayawijaya,Papua Pegunungan,300000,4.9,-4.0930,138.9489,Lembah hijau di pegunungan Jayawijaya rumah suku Dani yang mempertahankan tradisi kuno potong jari dan festival perang adat.
+93,Pantai Air Manis,Sejarah,Padang,Sumatera Barat,10000,4.2,-0.9930,100.3530,Pantai pasir landai tempat ditemukannya batu berbentuk orang bersujud yang dipercaya sebagai legenda Malin Kundang.
+94,Danau Sentani,Alam,Jayapura,Papua,15000,4.7,-2.6288,140.5489,Danau kawah vulkanik luas di lereng gunung dengan 21 pulau kecil di tengahnya yang dihuni suku lokal pelukis kulit kayu.
+95,Taman Nasional Ujung Kulon,Alam,Pandeglang,Banten,150000,4.8,-6.7489,105.3214,Semenanjung ujung barat pulau Jawa yang merupakan suaka perlindungan terakhir hewan purba Badak Bercula Satu.
+96,Pantai Sawarna,Alam,Lebak,Banten,15000,4.5,-6.9930,106.3124,Garis pantai selatan Banten berombak besar dengan tebing batu karang Tanjung Layar yang ikonik diterjang ombak.
+97,Kawasan Pecinan Glodok,Budaya,Jakarta Barat,DKI Jakarta,0,4.4,-6.1414,106.8142,Pusat pemukiman Tionghoa bersejarah di Jakarta dengan pasar tradisional, kuil kuno Jin De Yuan, dan kuliner legendaris.
+98,Masjid Raya Al-Mashun,Budaya,Medan,Sumatera Utara,0,4.6,3.5756,98.6872,Masjid agung bersejarah peninggalan Kesultanan Deli yang memadukan gaya arsitektur Maroko, Eropa, dan Melayu.
+99,Bukit Bintang Yogyakarta,Rekreasi,Gunungkidul,DI Yogyakarta,0,4.3,-7.8483,110.4930,Perbukitan tepi jalan Jogja-Wonosari tempat nongkrong malam paling favorit untuk melihat kerlap-kerlip lampu kota Jogja dari ketinggian.
+100,Taman Hutan Raya Juanda,Alam,Bandung,Jawa Barat,15000,4.5,-6.8572,107.6322,Hutan konservasi di Bandung Utara yang memiliki situs Goa Belanda dan Goa Jepang peninggalan perang dunia.
+101,Floating Market Lok Baintan,Budaya,Banjar,Kalimantan Selatan,50000,4.7,-3.3512,114.6542,Pasar terapung tradisional legendaris di atas sungai Martapura menggunakan perahu dayung kayu (Jukung).
+102,Pantai Tanjung Bira,Bahari,Bulukumba,Sulawesi Selatan,20000,4.6,-5.6186,120.4569,Pantai berpasir putih selembut bedak bayi dengan laut gradasi biru tiga warna dan sentra pembuatan kapal phinisi.
+103,Danau Linow,Alam,Tomohon,Sulawesi Utara,35000,4.6,1.2722,124.8214,Danau belerang cantik yang dapat berubah warna dari hijau toska, biru, hingga coklat tua dengan kafe nyaman di tepinya.
+104,Tebing Breksi,Rekreasi,Sleman,DI Yogyakarta,10000,4.5,-7.7814,110.4839,Tebing batuan kapur bekas pertambangan liar yang disulap menjadi taman seni pahatan raksasa yang menawan.
+105,Kebun Binatang Gembira Loka,Rekreasi,Yogyakarta,DI Yogyakarta,60000,4.6,-7.8044,110.3972,Kebun binatang keluarga dengan konsep kebun raya botani dan danau buatan rekreasi air di tengah kota Jogja.
