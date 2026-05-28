@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dataset & UI Visualizer Showcase</title>
+    <!-- Google Fonts: Plus Jakarta Sans & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="background-decor">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+        <div class="circle circle-3"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-logo">
+                    <i class="fa-solid fa-chart-line-up"></i>
+                </div>
+                <h2>CleanData<span>UI</span></h2>
+            </div>
+            
+            <nav class="nav-menu">
+                <button class="nav-btn active" data-dataset="ecommerce">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span>E-Commerce Sales</span>
+                </button>
+                <button class="nav-btn" data-dataset="finance">
+                    <i class="fa-solid fa-wallet"></i>
+                    <span>Personal Finance</span>
+                </button>
+                <button class="nav-btn" data-dataset="weather">
+                    <i class="fa-solid fa-cloud-sun"></i>
+                    <span>Weather & AQI</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <p>Created by Antigravity</p>
+                <span class="badge">v1.0.0</span>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="content-header">
+                <div class="header-title">
+                    <h1 id="dataset-title">E-Commerce Sales Dashboard</h1>
+                    <p id="dataset-subtitle">Visualisasi dataset penjualan, demografi, dan pesanan terbaru</p>
+                </div>
+                <div class="header-actions">
+                    <button class="action-btn" id="btn-refresh" title="Muat Ulang Data">
+                        <i class="fa-solid fa-rotate"></i>
+                    </button>
+                    <a id="btn-raw-json" href="#" target="_blank" class="action-btn-primary">
+                        <i class="fa-solid fa-code"></i>
+                        <span>Lihat Raw JSON</span>
+                    </a>
+                </div>
+            </header>
+
+            <!-- Dashboard Content Container (will be dynamically updated by JS) -->
+            <div id="dashboard-view" class="dashboard-grid">
+                <!-- Dynamic Content Loads Here -->
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
