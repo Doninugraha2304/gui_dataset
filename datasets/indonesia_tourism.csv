@@ -1,3 +1,4 @@
+sep=,
 Place_Id,Place_Name,Category,City,Province,Price,Rating,Lat,Long,Description
 1,Candi Borobudur,Budaya,Magelang,Jawa Tengah,50000,4.8,-7.6079,110.2038,Candi Buddha terbesar di dunia yang merupakan salah satu keajaiban arsitektur kuno.
 2,Tanah Lot,Alam,Tabanan,Bali,60000,4.7,-8.6212,115.0868,Pura laut ikonik yang terletak di atas bongkahan batu besar dengan pemandangan matahari terbenam yang spektakuler.

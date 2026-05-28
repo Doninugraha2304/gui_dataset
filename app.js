@@ -136,6 +136,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function parseEcommerceCSV(text) {
         const lines = text.split('\n');
+        if (lines[0] && lines[0].trim() === 'sep=,') {
+            lines.shift();
+        }
         const result = [];
         for (let i = 1; i < lines.length; i++) {
             const line = lines[i].trim();
@@ -160,6 +163,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function parseFinanceCSV(text) {
         const lines = text.split('\n');
+        if (lines[0] && lines[0].trim() === 'sep=,') {
+            lines.shift();
+        }
         const result = [];
         for (let i = 1; i < lines.length; i++) {
             const line = lines[i].trim();
@@ -181,6 +187,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function parseWeatherCSV(text) {
         const lines = text.split('\n');
+        if (lines[0] && lines[0].trim() === 'sep=,') {
+            lines.shift();
+        }
         const result = [];
         for (let i = 1; i < lines.length; i++) {
             const line = lines[i].trim();
@@ -207,6 +216,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function parseTourismCSV(text) {
         const lines = text.split('\n');
+        if (lines[0] && lines[0].trim() === 'sep=,') {
+            lines.shift();
+        }
         const result = [];
         for (let i = 1; i < lines.length; i++) {
             const line = lines[i].trim();

@@ -1,3 +1,4 @@
+sep=,
 Date,Time,Temperature,Feels_Like,Condition,Humidity,Wind_Speed,UV_Index,AQI,AQI_Status,Pressure,Chance_of_Rain
 2026-05-25,00:00,24,27,Cloudy,88,8,0,78,Moderate,1011,10
 2026-05-25,01:00,24,27,Cloudy,89,8,0,77,Moderate,1010,10

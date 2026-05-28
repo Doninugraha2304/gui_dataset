@@ -1,3 +1,4 @@
+sep=,
 Order_Id,Customer_Name,Product_Name,Category,Price,Quantity,Total_Amount,Order_Date,Status,Customer_Age
 ORD-1001,Aria Sterling,Wireless Noise-Cancelling Headphones,Electronics,150,1,150,2026-01-05,Delivered,25
 ORD-1002,Liam Vance,Minimalist Leather Backpack,Accessories,90,1,90,2026-01-07,Delivered,34
