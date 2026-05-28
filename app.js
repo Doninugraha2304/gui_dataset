@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // State management
     let currentDataset = 'ecommerce';
     let cachedData = {};
+    let tripCart = []; // Persists across tabs for Trip Planner (Cart)
 
     // Dom Elements
     const navButtons = document.querySelectorAll('.nav-btn');
@@ -123,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
             case 'tourism':
                 datasetTitle.innerText = "Indonesian Tourism Places Dashboard";
-                datasetSubtitle.innerText = "Eksplorasi 105 destinasi wisata pilihan dari 26 provinsi di Indonesia lengkap dengan pencarian, filter, dan harga tiket masuk";
+                datasetSubtitle.innerText = "Eksplorasi 105 destinasi wisata pilihan dari 26 provinsi di Indonesia lengkap dengan pencarian, filter kategori (Chart), dan keranjang rencana perjalanan (Cart)";
                 renderTourism(data);
                 break;
         }
@@ -838,7 +839,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* -------------------------------------------------------------
-     * 4. INDONESIAN TOURISM DASHBOARD RENDERER
+     * 4. INDONESIAN TOURISM DASHBOARD RENDERER (CHART + CART)
      * ------------------------------------------------------------- */
     function renderTourism(allDestinations) {
         // Formatter Helper for IDR currency
@@ -927,8 +928,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
 
-            <!-- Main Destinations List Table -->
-            <div class="card col-4">
+            <!-- Main Destinations List Table (Grid col-3) -->
+            <div class="card col-3">
                 <div class="card-header">
                     <h3 class="card-title"><i class="fa-solid fa-list-ul"></i> Eksplorasi Destinasi Wisata Nusantara</h3>
                     <span class="badge">CSV DATA</span>
@@ -942,7 +943,8 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <th>Lokasi</th>
                                 <th>Harga Tiket</th>
                                 <th style="text-align: center;">Rating</th>
-                                <th style="width: 35%;">Deskripsi</th>
+                                <th style="width: 25%;">Deskripsi</th>
+                                <th style="text-align: center;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody id="tourism-table-body">
@@ -951,15 +953,43 @@ document.addEventListener('DOMContentLoaded', () => {
                     </table>
                 </div>
             </div>
+
+            <!-- Side Panel (Grid col-1) -->
+            <div class="col-1" style="display: flex; flex-direction: column; gap: 1.75rem;">
+                <!-- Category Chart Card (Chart) -->
+                <div class="card" style="padding: 1.25rem;">
+                    <div class="card-header" style="margin-bottom: 1rem;">
+                        <h3 class="card-title" style="font-size: 1rem; color: white;"><i class="fa-solid fa-chart-simple" style="color: var(--secondary);"></i> Distribusi Wisata</h3>
+                    </div>
+                    <div id="category-chart-container">
+                        ${generateCategoryChartSVG(allDestinations)}
+                    </div>
+                </div>
+                
+                <!-- Trip Cart Card (Cart) -->
+                <div class="card" style="padding: 1.25rem;">
+                    <div class="card-header" style="margin-bottom: 1rem;">
+                        <h3 class="card-title" style="font-size: 1rem; color: white;"><i class="fa-solid fa-suitcase-rolling" style="color: var(--secondary);"></i> Rencana Trip</h3>
+                        <span class="badge" id="trip-cart-badge" style="background: var(--secondary); color: black; font-weight: bold;">0</span>
+                    </div>
+                    <div id="trip-cart-container">
+                        <!-- Loaded dynamically -->
+                    </div>
+                </div>
+            </div>
         `;
 
         dashboardView.innerHTML = html;
+
+        // Load the trip cart immediately
+        renderTripCartCard();
 
         // Interactive filtering logic
         const searchInput = document.getElementById('search-tourism');
         const categoryFilter = document.getElementById('filter-category');
         const tableBody = document.getElementById('tourism-table-body');
         const filteredCountLabel = document.getElementById('filtered-count-label');
+        const chartContainer = document.getElementById('category-chart-container');
 
         function performFiltering() {
             const query = searchInput.value.toLowerCase().trim();
@@ -978,6 +1008,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             tableBody.innerHTML = generateTableRowsHTML(filtered, formatRupiah);
             filteredCountLabel.innerText = `Menampilkan ${filtered.length} destinasi wisata`;
+            chartContainer.innerHTML = generateCategoryChartSVG(filtered); // Dynamic chart updating!
         }
 
         searchInput.addEventListener('input', performFiltering);
@@ -989,7 +1020,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (destinations.length === 0) {
             return `
                 <tr>
-                    <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 3rem 0;">
+                    <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 3rem 0;">
                         <i class="fa-solid fa-ban" style="font-size: 2rem; margin-bottom: 0.5rem; display: block;"></i>
                         Tidak ada destinasi wisata yang cocok dengan pencarian Anda.
                     </td>
@@ -1020,11 +1051,195 @@ document.addEventListener('DOMContentLoaded', () => {
                         <i class="fa-solid fa-star" style="font-size: 0.8rem;"></i>
                     </div>
                 </td>
-                <td style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.4; max-width: 300px; white-space: normal;">
+                <td style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.4; max-width: 200px; white-space: normal;">
                     ${item.Description}
+                </td>
+                <td style="text-align: center;">
+                    <button onclick="window.addToTrip('${item.Place_Id}', '${item.Place_Name.replace(/'/g, "\\'")}', '${item.City.replace(/'/g, "\\'")}', ${item.Price})" class="action-btn-primary" style="padding: 0.5rem 0.6rem; font-size: 0.75rem; border-radius: 8px; display: inline-flex; gap: 0.25rem; font-weight: 700; box-shadow: none;" title="Tambah ke Rencana Trip">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Trip</span>
+                    </button>
                 </td>
             </tr>
         `).join('');
+    }
+
+    // Category distribution bar generator (Chart)
+    function generateCategoryChartSVG(destinations) {
+        const counts = {};
+        destinations.forEach(d => {
+            counts[d.Category] = (counts[d.Category] || 0) + 1;
+        });
+        
+        const data = Object.entries(counts).map(([name, count]) => ({ name, count }));
+        const maxVal = Math.max(...data.map(d => d.count), 1);
+        
+        let html = '';
+        data.forEach((d, i) => {
+            const pct = (d.count / maxVal) * 85; // Scale to max 85% width
+            const color = getPaletteColor(i);
+            html += `
+                <div style="margin-bottom: 0.85rem;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 0.25rem;">
+                        <span style="font-weight: 500; color: var(--text-secondary);">${d.name}</span>
+                        <span style="font-weight: 600; color: white;">${d.count}</span>
+                    </div>
+                    <div style="height: 6px; background: rgba(255,255,255,0.03); border-radius: 4px; overflow: hidden;">
+                        <div style="height: 100%; width: ${pct}%; background: ${color}; border-radius: 4px; transition: width 0.5s ease;"></div>
+                    </div>
+                </div>
+            `;
+        });
+        return html || '<p style="font-size: 0.75rem; color: var(--text-muted); text-align: center;">Tidak ada data kategori.</p>';
+    }
+
+    // Dynamic Trip Cart drawer renderer (Cart)
+    function renderTripCartCard() {
+        const cartContainer = document.getElementById('trip-cart-container');
+        const cartBadge = document.getElementById('trip-cart-badge');
+        if (!cartContainer) return;
+
+        const formatRupiah = (num) => {
+            if (num === 0) return "Gratis";
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(num);
+        };
+
+        const totalCost = tripCart.reduce((sum, item) => sum + item.price, 0);
+        const count = tripCart.length;
+
+        // Update badge count
+        if (cartBadge) {
+            cartBadge.innerText = count;
+        }
+
+        let listHtml = '';
+        if (count === 0) {
+            listHtml = `
+                <div style="text-align: center; color: var(--text-muted); padding: 1.5rem 0; font-size: 0.8rem; line-height: 1.4;">
+                    <i class="fa-solid fa-suitcase-rolling" style="font-size: 2rem; margin-bottom: 0.5rem; display: block; color: var(--text-muted); opacity: 0.5;"></i>
+                    Rencana perjalanan kosong.<br>Klik tombol <b>+ Trip</b> di tabel untuk merencanakan trip Anda!
+                </div>
+            `;
+        } else {
+            listHtml = `
+                <div style="max-height: 180px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; padding-right: 0.25rem;">
+                    ${tripCart.map(item => `
+                        <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); padding: 0.5rem 0.65rem; border-radius: 10px; font-size: 0.8rem;">
+                            <div style="max-width: 65%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                <div style="font-weight: 600; color: white;">${item.name}</div>
+                                <div style="font-size: 0.7rem; color: var(--text-muted);">${item.city}</div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="font-weight: 600; color: var(--secondary); font-size: 0.75rem;">${formatRupiah(item.price)}</span>
+                                <button onclick="window.removeFromTrip('${item.id}')" style="background: transparent; border: none; color: var(--danger); cursor: pointer; font-size: 0.85rem;" title="Hapus">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+                
+                <div style="border-top: 1px solid var(--border-glass); padding-top: 0.8rem; margin-bottom: 1rem;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 0.3rem; color: var(--text-secondary);">
+                        <span>Total Lokasi</span>
+                        <span style="font-weight: 600; color: white;">${count} Destinasi</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700; color: white;">
+                        <span>Total Tiket</span>
+                        <span style="color: var(--secondary);">${formatRupiah(totalCost)}</span>
+                    </div>
+                </div>
+                
+                <button onclick="window.bookTrip()" class="action-btn-primary" style="width: 100%; justify-content: center; padding: 0.75rem; font-size: 0.85rem; font-weight: 700;">
+                    <i class="fa-solid fa-plane-departure"></i>
+                    <span>Pesan Rencana Trip</span>
+                </button>
+            `;
+        }
+        
+        cartContainer.innerHTML = listHtml;
+    }
+
+    /* -------------------------------------------------------------
+     * GLOBAL TRIP PLANNER ACTIONS (WINDOW ACCESSIBLE)
+     * ------------------------------------------------------------- */
+    
+    // Add to Trip
+    window.addToTrip = function(id, name, city, price) {
+        // Prevent duplicate entries
+        if (tripCart.some(item => item.id === id)) {
+            showToast(`"${name}" sudah ada dalam rencana trip Anda!`, 'warning');
+            return;
+        }
+        tripCart.push({ id, name, city, price });
+        renderTripCartCard();
+        showToast(`Berhasil menambahkan "${name}" ke Rencana Trip!`, 'success');
+    }
+
+    // Remove from Trip
+    window.removeFromTrip = function(id) {
+        const itemIndex = tripCart.findIndex(item => item.id === id);
+        if (itemIndex > -1) {
+            const name = tripCart[itemIndex].name;
+            tripCart.splice(itemIndex, 1);
+            renderTripCartCard();
+            showToast(`"${name}" dihapus dari rencana trip.`, 'warning');
+        }
+    }
+
+    // Book Trip checkout
+    window.bookTrip = function() {
+        if (tripCart.length === 0) return;
+        const total = tripCart.reduce((sum, item) => sum + item.price, 0);
+        const formattedTotal = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(total);
+        showToast(`Sukses memesan ${tripCart.length} destinasi wisata! Total tiket: ${formattedTotal}. Selamat berlibur! ✈️`, 'success');
+        
+        // Clear cart after checkout simulation
+        tripCart = [];
+        renderTripCartCard();
+    }
+
+    // Floating dynamic toast builder
+    function showToast(message, type = 'success') {
+        const toast = document.createElement('div');
+        toast.style.position = 'fixed';
+        toast.style.bottom = '2rem';
+        toast.style.right = '2rem';
+        toast.style.background = type === 'success' ? 'var(--gradient-success)' : (type === 'warning' ? 'var(--gradient-warning)' : 'var(--gradient-primary)');
+        toast.style.color = 'white';
+        toast.style.padding = '0.9rem 1.4rem';
+        toast.style.borderRadius = '14px';
+        toast.style.boxShadow = '0 10px 40px rgba(0, 0, 0, 0.5)';
+        toast.style.zIndex = '9999';
+        toast.style.fontFamily = 'var(--font-main)';
+        toast.style.fontSize = '0.85rem';
+        toast.style.fontWeight = '600';
+        toast.style.display = 'flex';
+        toast.style.alignItems = 'center';
+        toast.style.gap = '0.65rem';
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(20px)';
+        toast.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+
+        const icon = type === 'success' ? 'fa-circle-check' : (type === 'warning' ? 'fa-triangle-exclamation' : 'fa-plane-departure');
+        toast.innerHTML = `<i class="fa-solid ${icon}" style="font-size: 1.1rem;"></i> <span>${message}</span>`;
+
+        document.body.appendChild(toast);
+
+        setTimeout(() => {
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateY(0)';
+        }, 50);
+
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                if (document.body.contains(toast)) {
+                    document.body.removeChild(toast);
+                }
+            }, 400);
+        }, 3500);
     }
 
     /* -------------------------------------------------------------
