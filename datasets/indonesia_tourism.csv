@@ -1,0 +1,31 @@
+Place_Id,Place_Name,Category,City,Province,Price,Rating,Lat,Long,Description
+1,Candi Borobudur,Budaya,Magelang,Jawa Tengah,50000,4.8,-7.6079,110.2038,Candi Buddha terbesar di dunia yang merupakan salah satu keajaiban arsitektur kuno.
+2,Tanah Lot,Alam,Tabanan,Bali,60000,4.7,-8.6212,115.0868,Pura laut ikonik yang terletak di atas bongkahan batu besar dengan pemandangan matahari terbenam yang spektakuler.
+3,Taman Mini Indonesia Indah,Rekreasi,Jakarta Timur,DKI Jakarta,25000,4.5,-6.3024,106.8952,Taman rekreasi bertema budaya Indonesia yang merangkum kekayaan adat dan budaya Nusantara.
+4,Kawah Putih,Alam,Bandung,Jawa Barat,28000,4.6,-7.1662,107.4021,Danau kawah vulkanik dengan air berwarna putih kehijauan yang sangat cantik dan dikelilingi kabut pegunungan.
+5,Candi Prambanan,Budaya,Sleman,DI Yogyakarta,50000,4.7,-7.7520,110.4914,Kompleks candi Hindu terbesar di Indonesia yang terkenal dengan legenda Roro Jonggrang.
+6,Pantai Kuta,Alam,Badung,Bali,0,4.4,-8.7185,115.1686,Pantai pasir putih paling legendaris di Bali yang menjadi surga bagi para peselancar dan penikmat sunset.
+7,Gunung Bromo,Alam,Probolinggo,Jawa Timur,29000,4.8,-7.9425,112.9530,Gunung berapi aktif dengan kawah berasap yang menyajikan pemandangan matahari terbit paling magis.
+8,Dunia Fantasi (Dufan),Rekreasi,Jakarta Utara,DKI Jakarta,250000,4.6,-6.1252,106.8331,Taman hiburan tematik terbesar di Jakarta dengan berbagai wahana memicu adrenalin.
+9,Jalan Malioboro,Belanja,Yogyakarta,DI Yogyakarta,0,4.6,-7.7926,110.3658,Kawasan jalan paling terkenal di Yogyakarta yang menjadi pusat belanja batik, kuliner, dan cinderamata.
+10,Tebing Keraton,Alam,Bandung,Jawa Barat,15000,4.5,-6.8341,107.6636,Tebing batu dengan pemandangan hamparan hutan pinus hijau yang sangat instagramable.
+11,Kepulauan Raja Ampat,Bahari,Raja Ampat,Papua Barat Daya,500000,4.9,-0.2288,130.5016,Kepulauan karst tropis terindah di dunia dengan keanekaragaman hayati bawah laut tertinggi di bumi.
+12,Pantai Pink (Pink Beach),Bahari,Lombok,Nusa Tenggara Barat,10000,4.7,-8.9130,116.6022,Pantai eksotis dengan pasir berwarna merah muda unik akibat pencampuran karang merah dan pasir putih.
+13,Labuan Bajo,Bahari,Manggarai Barat,Nusa Tenggara Timur,150000,4.8,-8.4862,119.8821,Gerbang utama menuju Taman Nasional Komodo yang terkenal dengan pemandangan bukit dan pulau tropis yang megah.
+14,Kepulauan Seribu,Bahari,Jakarta Kepulauan,DKI Jakarta,50000,4.4,-5.6122,106.6169,Gugusan pulau tropis di utara Jakarta yang menawarkan rekreasi pantai, snorkeling, dan resor santai.
+15,Saung Angklung Udjo,Budaya,Bandung,Jawa Barat,75000,4.8,-6.8979,107.6548,Pusat pelestarian kebudayaan angklung tradisional Sunda dengan pertunjukan musik bambu interaktif.
+16,Pura Luhur Uluwatu,Budaya,Badung,Bali,50000,4.7,-8.8291,115.0849,Pura suci di ujung tebing karang curam dengan pemandangan Samudra Hindia dan pertunjukan tari Kecak sunset.
+17,Taman Safari Indonesia,Rekreasi,Bogor,Jawa Barat,230000,4.7,-6.7235,106.9493,Kebun binatang safari terbuka di mana pengunjung dapat berinteraksi dekat dengan satwa eksotis.
+18,Danau Toba,Alam,Samosir,Sumatera Utara,10000,4.8,2.6242,98.8156,Danau vulkanik terbesar di dunia dengan Pulau Samosir di tengahnya yang sarat adat budaya Batak.
+19,Gunung Rinjani,Alam,Lombok Utara,Nusa Tenggara Barat,150000,4.9,-8.4114,116.4578,Gunung api tertinggi kedua di Indonesia dengan pemandangan danau kawah Segara Anak yang memukau.
+20,Trans Studio Bandung,Rekreasi,Bandung,Jawa Barat,200000,4.5,-6.9252,107.6366,Taman hiburan dalam ruangan (indoor theme park) terbesar di Indonesia dengan wahana kelas dunia.
+21,Monumen Nasional (Monas),Sejarah,Jakarta Pusat,DKI Jakarta,15000,4.5,-6.1754,106.8272,Tugu peringatan setinggi 132 meter dengan mahkota emas api yang melambangkan perjuangan kemerdekaan.
+22,Pantai Pandawa,Bahari,Badung,Bali,15000,4.5,-8.8451,115.1868,Pantai pasir putih berair tenang yang diapit tebing kapur terjal dengan patung tokoh Pandawa Lima.
+23,Kebun Raya Bogor,Alam,Bogor,Jawa Barat,25000,4.6,-6.5976,106.7996,Kebun botani tertua di Asia Tenggara dengan koleksi ribuan tanaman tropis langka dan pohon kuno.
+24,Pantai Parangtritis,Alam,Bantul,DI Yogyakarta,10000,4.4,-8.0253,110.3297,Pantai pasir hitam legendaris pantai selatan yang kental dengan mitos ratu laut kidul.
+25,Taman Nasional Komodo,Alam,Manggarai Barat,Nusa Tenggara Timur,250000,4.9,-8.5356,119.4524,Habitat asli kadal purba Komodo yang dilindungi oleh UNESCO dengan ekosistem sabana yang unik.
+26,Puncak Pass,Alam,Cianjur,Jawa Barat,0,4.3,-6.7029,106.9942,Kawasan perbukitan sejuk dengan perkebunan teh hijau berundak yang menjadi destinasi akhir pekan favorit.
+27,Gili Trawangan,Bahari,Lombok Utara,Nusa Tenggara Barat,20000,4.7,-8.3510,116.0354,Pulau kecil bebas kendaraan bermotor yang terkenal dengan pesta pantai, snorkeling penyu, dan resor santai.
+28,Farmhouse Susu Lembang,Rekreasi,Bandung,Jawa Barat,30000,4.4,-6.8272,107.6046,Taman hiburan keluarga bergaya peternakan Eropa dengan bangunan Hobbiton dan susu segar gratis.
+29,Kraton Yogyakarta,Sejarah,Yogyakarta,DI Yogyakarta,15000,4.6,-7.8053,110.3642,Istana kesultanan resmi Yogyakarta yang menjadi pusat kebudayaan dan pelestarian adat Jawa.
+30,Kota Tua Jakarta,Sejarah,Jakarta Barat,DKI Jakarta,0,4.5,-6.1376,106.8124,Kawasan bersejarah peninggalan kolonial Belanda yang dipenuhi arsitektur klasik dan museum sejarah.
