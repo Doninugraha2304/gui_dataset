@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
             case 'tourism':
                 datasetTitle.innerText = "Indonesian Tourism Places Dashboard";
-                datasetSubtitle.innerText = "Eksplorasi 105 destinasi wisata pilihan dari 26 provinsi di Indonesia lengkap dengan pencarian, filter kategori (Chart), dan keranjang rencana perjalanan (Cart)";
+                datasetSubtitle.innerText = "Eksplorasi 105 destinasi wisata pilihan dari 26 provinsi di Indonesia lengkap dengan pencarian interaktif, grafik kategori (Chart), dan keranjang rencana perjalanan (Cart)";
                 renderTourism(data);
                 break;
         }
@@ -854,6 +854,8 @@ document.addEventListener('DOMContentLoaded', () => {
      * 4. INDONESIAN TOURISM DASHBOARD RENDERER (CHART + CART)
      * ------------------------------------------------------------- */
     function renderTourism(allDestinations) {
+        let activeView = 'all'; // State: 'all' or 'cart'
+
         // Formatter Helper for IDR currency
         const formatRupiah = (num) => {
             if (num === 0) return "<span class='status-badge success'>Gratis</span>";
@@ -914,19 +916,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
 
-            <!-- Search, Category Filter -->
+            <!-- Search, View Toggle, Category Filter -->
             <div class="card col-4" style="padding: 1.5rem;">
                 <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center; justify-content: space-between;">
-                    <div style="display: flex; gap: 1rem; flex-grow: 1; flex-wrap: wrap;">
+                    <div style="display: flex; gap: 1rem; flex-grow: 1; flex-wrap: wrap; align-items: center;">
+                        
+                        <!-- Toggle Tab Buttons (View Filter) -->
+                        <div style="display: flex; background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); padding: 0.25rem; border-radius: 12px; gap: 0.25rem;">
+                            <button id="btn-show-all" style="background: var(--gradient-primary); color: white; border: none; padding: 0.6rem 1.1rem; border-radius: 9px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.3s;" class="toggle-view-btn active">
+                                Semua Wisata
+                            </button>
+                            <button id="btn-show-cart" style="background: transparent; color: var(--text-secondary); border: none; padding: 0.6rem 1.1rem; border-radius: 9px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 0.45rem;" class="toggle-view-btn">
+                                <i class="fa-solid fa-suitcase-rolling"></i>
+                                <span>Rencana Trip (<span id="btn-cart-count">0</span>)</span>
+                            </button>
+                        </div>
+
                         <!-- Search Box -->
-                        <div style="position: relative; flex-grow: 1; min-width: 250px;">
+                        <div style="position: relative; flex-grow: 1; min-width: 230px;">
                             <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-secondary);"></i>
                             <input type="text" id="search-tourism" placeholder="Cari nama tempat, kota, atau provinsi..." 
                                 style="width: 100%; padding: 0.85rem 1.25rem 0.85rem 2.8rem; border-radius: 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); color: white; font-size: 0.95rem; outline: none; transition: border-color 0.3s;"
                                 onfocus="this.style.borderColor='var(--secondary)'" onblur="this.style.borderColor='var(--border-glass)'" />
                         </div>
                         <!-- Dropdown Filter -->
-                        <div style="min-width: 180px;">
+                        <div style="min-width: 170px;">
                             <select id="filter-category" 
                                 style="width: 100%; padding: 0.85rem 1.25rem; border-radius: 12px; background: var(--bg-card); border: 1px solid var(--border-glass); color: white; font-size: 0.95rem; outline: none; cursor: pointer;">
                                 <option value="all">Semua Kategori</option>
@@ -943,8 +957,8 @@ document.addEventListener('DOMContentLoaded', () => {
             <!-- Main Destinations List Table (Grid col-3) -->
             <div class="card col-3">
                 <div class="card-header">
-                    <h3 class="card-title"><i class="fa-solid fa-list-ul"></i> Eksplorasi Destinasi Wisata Nusantara</h3>
-                    <span class="badge">CSV DATA</span>
+                    <h3 class="card-title" id="tourism-table-title"><i class="fa-solid fa-list-ul"></i> Eksplorasi Destinasi Wisata Nusantara</h3>
+                    <span class="badge" id="tourism-table-badge">CSV DATA</span>
                 </div>
                 <div class="table-wrapper" style="max-height: 480px; overflow-y: auto;">
                     <table class="custom-table" id="tourism-table">
@@ -968,7 +982,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             <!-- Side Panel (Grid col-1) -->
             <div class="col-1" style="display: flex; flex-direction: column; gap: 1.75rem;">
-                <!-- Category Chart Card (Chart) -->
+                <!-- Category Chart Card -->
                 <div class="card" style="padding: 1.25rem;">
                     <div class="card-header" style="margin-bottom: 1rem;">
                         <h3 class="card-title" style="font-size: 1rem; color: white;"><i class="fa-solid fa-chart-simple" style="color: var(--secondary);"></i> Distribusi Wisata</h3>
@@ -978,7 +992,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
                 
-                <!-- Trip Cart Card (Cart) -->
+                <!-- Trip Cart Card -->
                 <div class="card" style="padding: 1.25rem;">
                     <div class="card-header" style="margin-bottom: 1rem;">
                         <h3 class="card-title" style="font-size: 1rem; color: white;"><i class="fa-solid fa-suitcase-rolling" style="color: var(--secondary);"></i> Rencana Trip</h3>
@@ -993,21 +1007,65 @@ document.addEventListener('DOMContentLoaded', () => {
 
         dashboardView.innerHTML = html;
 
-        // Load the trip cart immediately
-        renderTripCartCard();
-
-        // Interactive filtering logic
+        // Elements
         const searchInput = document.getElementById('search-tourism');
         const categoryFilter = document.getElementById('filter-category');
         const tableBody = document.getElementById('tourism-table-body');
         const filteredCountLabel = document.getElementById('filtered-count-label');
         const chartContainer = document.getElementById('category-chart-container');
+        const tableTitle = document.getElementById('tourism-table-title');
+        const tableBadge = document.getElementById('tourism-table-badge');
+        
+        const btnShowAll = document.getElementById('btn-show-all');
+        const btnShowCart = document.getElementById('btn-show-cart');
+        const btnCartCount = document.getElementById('btn-cart-count');
 
+        // Load the trip cart immediately
+        renderTripCartCard();
+        if (btnCartCount) btnCartCount.innerText = tripCart.length;
+
+        // View Toggles Click Events
+        btnShowAll.addEventListener('click', () => {
+            if (activeView === 'all') return;
+            activeView = 'all';
+            
+            btnShowAll.style.background = 'var(--gradient-primary)';
+            btnShowAll.style.color = 'white';
+            btnShowCart.style.background = 'transparent';
+            btnShowCart.style.color = 'var(--text-secondary)';
+            
+            tableTitle.innerHTML = `<i class="fa-solid fa-list-ul"></i> Eksplorasi Destinasi Wisata Nusantara`;
+            tableBadge.innerText = 'CSV DATA';
+            
+            performFiltering();
+        });
+
+        btnShowCart.addEventListener('click', () => {
+            if (activeView === 'cart') return;
+            activeView = 'cart';
+            
+            btnShowCart.style.background = 'var(--gradient-primary)';
+            btnShowCart.style.color = 'white';
+            btnShowAll.style.background = 'transparent';
+            btnShowAll.style.color = 'var(--text-secondary)';
+            
+            tableTitle.innerHTML = `<i class="fa-solid fa-suitcase-rolling"></i> Rencana Trip Saya (Keranjang)`;
+            tableBadge.innerText = 'TRIP PLANNER';
+            
+            performFiltering();
+        });
+
+        // Interactive filtering logic
         function performFiltering() {
             const query = searchInput.value.toLowerCase().trim();
             const selectedCat = categoryFilter.value;
 
-            const filtered = allDestinations.filter(item => {
+            // Choose base array to filter
+            const baseList = activeView === 'all'
+                ? allDestinations
+                : allDestinations.filter(d => tripCart.some(item => item.id === d.Place_Id));
+
+            const filtered = baseList.filter(item => {
                 const matchesSearch = item.Place_Name.toLowerCase().includes(query) || 
                                       item.City.toLowerCase().includes(query) || 
                                       item.Province.toLowerCase().includes(query) ||
@@ -1020,8 +1078,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             tableBody.innerHTML = generateTableRowsHTML(filtered, formatRupiah);
             filteredCountLabel.innerText = `Menampilkan ${filtered.length} destinasi wisata`;
-            chartContainer.innerHTML = generateCategoryChartSVG(filtered); // Dynamic chart updating!
+            chartContainer.innerHTML = generateCategoryChartSVG(filtered); // Dynamic category chart!
         }
+
+        // Attach filter reference globally so cart add/remove updates table in 'cart' view!
+        window.refreshTourismFilter = performFiltering;
 
         searchInput.addEventListener('input', performFiltering);
         categoryFilter.addEventListener('change', performFiltering);
@@ -1034,12 +1095,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 <tr>
                     <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 3rem 0;">
                         <i class="fa-solid fa-ban" style="font-size: 2rem; margin-bottom: 0.5rem; display: block;"></i>
-                        Tidak ada destinasi wisata yang cocok dengan pencarian Anda.
+                        Tidak ada destinasi wisata yang cocok dengan kriteria Anda.
                     </td>
                 </tr>
             `;
         }
-        return destinations.map(item => `
+        return destinations.map(item => {
+            const isInCart = tripCart.some(cartItem => cartItem.id === item.Place_Id);
+            const buttonHTML = isInCart 
+                ? `<button onclick="window.removeFromTrip('${item.Place_Id}')" class="action-btn-primary" style="padding: 0.5rem 0.6rem; font-size: 0.75rem; border-radius: 8px; display: inline-flex; gap: 0.25rem; font-weight: 700; box-shadow: none; background: var(--gradient-danger);" title="Hapus dari Rencana Trip">
+                    <i class="fa-solid fa-minus"></i>
+                    <span>Hapus</span>
+                   </button>`
+                : `<button onclick="window.addToTrip('${item.Place_Id}', '${item.Place_Name.replace(/'/g, "\\'")}', '${item.City.replace(/'/g, "\\'")}', ${item.Price})" class="action-btn-primary" style="padding: 0.5rem 0.6rem; font-size: 0.75rem; border-radius: 8px; display: inline-flex; gap: 0.25rem; font-weight: 700; box-shadow: none;" title="Tambah ke Rencana Trip">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Trip</span>
+                   </button>`;
+            return `
             <tr>
                 <td>
                     <div style="font-weight: 600; font-size: 0.95rem; color: white;">${item.Place_Name}</div>
@@ -1067,13 +1139,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     ${item.Description}
                 </td>
                 <td style="text-align: center;">
-                    <button onclick="window.addToTrip('${item.Place_Id}', '${item.Place_Name.replace(/'/g, "\\'")}', '${item.City.replace(/'/g, "\\'")}', ${item.Price})" class="action-btn-primary" style="padding: 0.5rem 0.6rem; font-size: 0.75rem; border-radius: 8px; display: inline-flex; gap: 0.25rem; font-weight: 700; box-shadow: none;" title="Tambah ke Rencana Trip">
-                        <i class="fa-solid fa-plus"></i>
-                        <span>Trip</span>
-                    </button>
+                    ${buttonHTML}
                 </td>
             </tr>
-        `).join('');
+            `;
+        }).join('');
     }
 
     // Category distribution bar generator (Chart)
@@ -1109,6 +1179,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderTripCartCard() {
         const cartContainer = document.getElementById('trip-cart-container');
         const cartBadge = document.getElementById('trip-cart-badge');
+        const btnCartCount = document.getElementById('btn-cart-count');
         if (!cartContainer) return;
 
         const formatRupiah = (num) => {
@@ -1119,10 +1190,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalCost = tripCart.reduce((sum, item) => sum + item.price, 0);
         const count = tripCart.length;
 
-        // Update badge count
-        if (cartBadge) {
-            cartBadge.innerText = count;
-        }
+        // Update badge counts
+        if (cartBadge) cartBadge.innerText = count;
+        if (btnCartCount) btnCartCount.innerText = count;
 
         let listHtml = '';
         if (count === 0) {
@@ -1178,13 +1248,18 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Add to Trip
     window.addToTrip = function(id, name, city, price) {
-        // Prevent duplicate entries
         if (tripCart.some(item => item.id === id)) {
             showToast(`"${name}" sudah ada dalam rencana trip Anda!`, 'warning');
             return;
         }
         tripCart.push({ id, name, city, price });
+        
+        // Re-render components
         renderTripCartCard();
+        
+        // Trigger filter update (adds compatibility if user is viewing 'cart' tab)
+        if (window.refreshTourismFilter) window.refreshTourismFilter();
+        
         showToast(`Berhasil menambahkan "${name}" ke Rencana Trip!`, 'success');
     }
 
@@ -1194,7 +1269,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (itemIndex > -1) {
             const name = tripCart[itemIndex].name;
             tripCart.splice(itemIndex, 1);
+            
+            // Re-render components
             renderTripCartCard();
+            
+            // Trigger filter update (makes it disappear from table if user is in 'cart' view)
+            if (window.refreshTourismFilter) window.refreshTourismFilter();
+            
             showToast(`"${name}" dihapus dari rencana trip.`, 'warning');
         }
     }
@@ -1209,6 +1290,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Clear cart after checkout simulation
         tripCart = [];
         renderTripCartCard();
+        
+        // Refresh filtering
+        if (window.refreshTourismFilter) window.refreshTourismFilter();
     }
 
     // Floating dynamic toast builder
